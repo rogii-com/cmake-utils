@@ -25,7 +25,7 @@ function(
         LINK_FLAGS
     )
 
-    if (RPATH_LINK_FLAGS STREQUAL "NOTFOUND")
+    if (RPATH_LINK_FLAGS STREQUAL "RPATH_LINK_FLAGS-NOTFOUND")
         set(
             RPATH_LINK_FLAGS
             ""
