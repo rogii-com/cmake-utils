@@ -6,7 +6,9 @@ function(
     SETUP_RPATH_LINK
     TARGET_NAME
 )
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU"
+        OR CMAKE_C_COMPILER_ID STREQUAL "GNU"
+    )
         SETUP_RPATH_LINK_IMPL(
             "${TARGET_NAME}"
         )
