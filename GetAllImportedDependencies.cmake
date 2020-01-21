@@ -57,13 +57,36 @@ function(
         ${TARGET_NAME}
     )
 
-    get_property(
+    set(
         TARGET_LINK_LIBRARIES
-        TARGET
-            ${TARGET_NAME}
-        PROPERTY
-            LINK_LIBRARIES
+        ""
     )
+
+    get_target_property(
+        TARGET_NAME_TYPE
+        ${TARGET_NAME}
+        TYPE
+    )
+
+    if(
+        TARGET_NAME_TYPE STREQUAL "STATIC_LIBRARY"
+        OR TARGET_NAME_TYPE STREQUAL "MODULE_LIBRARY"
+        OR TARGET_NAME_TYPE STREQUAL "SHARED_LIBRARY"
+        OR TARGET_NAME_TYPE STREQUAL "OBJECT_LIBRARY"
+        OR TARGET_NAME_TYPE STREQUAL "EXECUTABLE"
+    )
+        get_target_property(
+            TARGET_LINK_LIBRARIES
+            ${TARGET_NAME}
+            LINK_LIBRARIES
+        )
+    elseif(TARGET_NAME_TYPE STREQUAL "INTERFACE_LIBRARY")
+        get_target_property(
+            TARGET_LINK_LIBRARIES
+            ${TARGET_NAME}
+            INTERFACE_LINK_LIBRARIES
+        )
+    endif()
 
     foreach(LINKED_ENTITY IN LISTS TARGET_LINK_LIBRARIES)
         if(NOT TARGET ${LINKED_ENTITY})
